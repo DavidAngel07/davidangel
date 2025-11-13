@@ -141,7 +141,7 @@ const Portfolio = () => {
       image: frontend2,
       tags: ["React"],
       category: "PROYECTOS",
-      demoUrl: "https://preview--flickfinder-home.lovable.app",
+      demoUrl: "",
       githubUrl: "https://github.com/DavidAngel07/globe-clock-show.git",
     },
     {
@@ -152,7 +152,7 @@ const Portfolio = () => {
       image: frontend3,
       tags: ["React"],
       category: "PROYECTOS",
-      demoUrl: "https://preview--flickfinder-home.lovable.app",
+      demoUrl: "",
       githubUrl: "https://github.com/DavidAngel07/globe-clock-show.git",
     },
     {
