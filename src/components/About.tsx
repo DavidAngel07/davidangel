@@ -1,123 +1,135 @@
 import {
-  Calendar,
   Mail,
   MapPin,
-  Phone,
-  Globe,
-  Briefcase,
-  Gamepad2,
-  Music,
-  Book,
-  Plane,
-  Code2,
-  Car,
-  Camera,
-  Volleyball
+  Download,
+  Eye
 } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import profileImage from "@/assets/optimized/about-foto.webp";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const About = () => {
-  const personalInfo = [
-    { icon: Calendar, label: "Nacimiento", value: "02-09-2003" },
-    { icon: Phone, label: "Teléfono", value: "+57 314-3814895" },
-    { icon: Mail, label: "Email", value: "davidangelosorio29@gmail.com" },
-    { icon: Globe, label: "Website", value: "www.davidangel.com" },
-    { icon: MapPin, label: "Dirección", value: "Calle 49b sur #9-89" },
-    { icon: Briefcase, label: "Cargo", value: "FREELANCE" },
-  ];
+  const { elementRef, isVisible } = useScrollAnimation();
+  const { t } = useTranslation();
+  const handleDownloadCV = () => {
+    const link = document.createElement('a');
+    link.href = '/cv-david-angel.pdf';
+    link.download = 'CV-David-Angel-Osorio.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
-  const interests = [
-    {
-      icon: Gamepad2,
-      label: "Videojuegos",
-      color: "from-purple-500 to-pink-500",
-    },
-    { icon: Volleyball, label: "Fútbol", color: "from-green-500 to-emerald-500" },
-    { icon: Music, label: "Música", color: "from-blue-500 to-cyan-500" },
-    { icon: Book, label: "Libros", color: "from-amber-500 to-orange-500" },
-    { icon: Plane, label: "Viajar", color: "from-sky-500 to-blue-500" },
-    { icon: Code2, label: "Programar", color: "from-primary to-tertiary" },
-    { icon: Car, label: "Vehículos", color: "from-red-500 to-rose-500" },
-    {
-      icon: Camera,
-      label: "Fotografía",
-      color: "from-indigo-500 to-purple-500",
-    },
-  ];
+  const scrollToPricing = () => {
+    const element = document.querySelector('#pricing');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section
       id="about"
       className="py-20 bg-gradient-to-b from-black to-[#01041b]"
     >
-      <div className="container mx-auto px-4">
+      <div
+        ref={elementRef}
+        className={`container mx-auto px-4 transition-all duration-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+        }`}
+      >
         <div className="text-center mb-16">
           <h1 className="text-4xl font-jost font-bold text-primary-foreground leading-none">
-            SOBRE
+            {t.about.title1}
           </h1>
           <h1 className="text-9xl md:text-[8rem] lg:text-[8rem] font-anton font-bold text-primary-foreground leading-none">
-            MI
+            {t.about.title2}
           </h1>
         </div>
 
-        {/* Personal Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {personalInfo.map((info) => (
-            <Card
-              key={info.label}
-              className="p-6 hover:shadow-elegant transition-smooth border-border/50 bg-gradient-to-br from-card to-card/80"
-            >
+        {/* Two Column Layout */}
+        <div className="flex flex-col lg:flex-row gap-20 lg:gap-28">
+          {/* Left Column - Image (35%) */}
+          <div className="lg:w-[35%] flex items-center justify-center">
+            <div className="relative w-full max-w-xs">
+              {/* Background rotated box with blur */}
+              <div
+                className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-2xl"
+                style={{
+                  transformOrigin: 'bottom right',
+                  transform: 'rotate(6deg)',
+                }}
+              ></div>
+
+              {/* Main Image */}
+              <img
+                src={profileImage}
+                alt="David Angel Osorio"
+                className="relative rounded-2xl w-full h-auto object-cover shadow-2xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          {/* Right Column - Information (65%) */}
+          <div className="lg:w-[65%] flex flex-col justify-center space-y-8">
+            {/* Section 1: Title and Description */}
+            <div className="space-y-4">
+              <h2 className="text-3xl md:text-4xl font-jost font-bold text-primary-foreground">
+                {t.about.role}
+              </h2>
+              <p className="text-base md:text-lg text-gray-300 font-jost leading-relaxed">
+                {t.about.description}
+              </p>
+            </div>
+
+            {/* Section 2: Location and Email */}
+            <div className="space-y-4">
+              {/* Location */}
               <div className="flex items-start space-x-4">
-                <div className="relative p-4 bg-gradient-to-br from-primary via-primary to-tertiary rounded-xl shadow-lg transform transition-transform hover:scale-110 hover:rotate-3">
+                <div className="relative p-3 bg-gradient-to-br from-primary via-primary to-tertiary rounded-xl shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-xl"></div>
-                  <info.icon className="h-6 w-6 text-white relative z-10 drop-shadow-lg" />
+                  <MapPin className="h-5 w-5 text-white relative z-10 drop-shadow-lg" />
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm text-foreground font-jost">
-                    {info.label}
-                  </p>
-                  <p className="font-medium text-foreground font-anton">{info.value}</p>
+                <div>
+                  <p className="text-sm text-primary-foreground font-anton">{t.about.location}</p>
+                  <p className="font-medium text-primary-foreground font-jost">{t.about.locationValue}</p>
                 </div>
               </div>
-            </Card>
-          ))}
-        </div>
 
-        {/* Interests Section */}
-        <div className="mt-16">
-          <h1 className="text-2xl font-jost font-bold text-primary-foreground leading-none">
-            Intereses
-          </h1>
-          <h1 className="text-4xl md:text-[4rem] lg:text-[4rem] font-anton font-bold text-primary-foreground leading-none">
-            Personales
-          </h1>
-          <div className="grid grid-cols-4 md:grid-cols-8 gap-3 mt-10">
-            {interests.map((interest) => (
-              <Card
-                key={interest.label}
-                className="group relative p-3 hover:shadow-glow transition-smooth border-none cursor-pointer bg-card font-jost overflow-hidden"
-              >
-                {/* Background de expansión con el color del gradiente */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${interest.color} opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out scale-0 group-hover:scale-150 rounded-lg`}
-                  style={{
-                    transformOrigin: 'center center',
-                  }}
-                ></div>
-
-                <div className="relative z-10 flex flex-col items-center text-center space-y-2">
-                  <div
-                    className={`p-2 rounded-lg bg-gradient-to-br ${interest.color} group-hover:scale-110 transition-smooth group-hover:bg-white/20`}
-                  >
-                    <interest.icon className="h-4 w-4 text-white" />
-                  </div>
-                  <p className="text-xs font-medium text-foreground group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                    {interest.label}
-                  </p>
+              {/* Email */}
+              <div className="flex items-start space-x-4">
+                <div className="relative p-3 bg-gradient-to-br from-primary via-primary to-tertiary rounded-xl shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent rounded-xl"></div>
+                  <Mail className="h-5 w-5 text-white relative z-10 drop-shadow-lg" />
                 </div>
-              </Card>
-            ))}
+                <div>
+                  <p className="text-sm text-primary-foreground font-anton">{t.about.email}</p>
+                  <p className="font-medium text-primary-foreground font-jost">davidangelosorio29@gmail.com</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 3: Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                onClick={handleDownloadCV}
+                className="bg-[#10bdff] hover:opacity-90 text-black font-jost font-semibold px-6 py-6 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105"
+              >
+                <Download className="h-5 w-5 mr-2" />
+                {t.about.downloadCV}
+              </Button>
+
+              <Button
+                onClick={scrollToPricing}
+                variant="outline"
+                className="border-2 border-white hover:border-primary text-[#10bdff] font-jost font-semibold px-6 py-6 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 bg-transparent backdrop-blur-sm"
+              >
+                <Eye className="h-5 w-5 mr-2" />
+                {t.about.viewPlans}
+              </Button>
+            </div>
           </div>
         </div>
 

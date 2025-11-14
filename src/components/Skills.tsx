@@ -4,8 +4,12 @@ import { SiTailwindcss, SiMysql, SiTypescript, SiFirebase, SiXampp, SiFigma } fr
 import { MdPeople, MdLightbulb, MdFavorite, MdCheckCircle, MdApi } from "react-icons/md";
 import { BsChatDots } from "react-icons/bs";
 import { FaCss3Alt } from "react-icons/fa6";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Skills = () => {
+  const { elementRef, isVisible } = useScrollAnimation();
+  const { t } = useTranslation();
   // Ordenadas de mayor a menor porcentaje
   const technicalSkills = [
     { name: "JavaScript", level: 90, icon: FaJs, color: "#F7DF1E" },
@@ -26,11 +30,11 @@ const Skills = () => {
   ];
 
   const professionalSkills = [
-    { name: "Comunicación", level: 80, icon: BsChatDots, color: "#3B82F6" }, // Azul - representa diálogo y claridad
-    { name: "Trabajo en Equipo", level: 90, icon: MdPeople, color: "#10B981" }, // Verde - representa colaboración y crecimiento
-    { name: "Creatividad", level: 90, icon: MdLightbulb, color: "#F59E0B" }, // Ámbar - representa ideas e innovación
-    { name: "Dedicación", level: 90, icon: MdFavorite, color: "#EF4444" }, // Rojo - representa pasión y compromiso
-    { name: "Gestión de Proyectos", level: 75, icon: MdCheckCircle, color: "#8B5CF6" }, // Violeta - representa organización y estrategia
+    { name: t.skills.communication, level: 80, icon: BsChatDots, color: "#3B82F6" }, // Azul - representa diálogo y claridad
+    { name: t.skills.teamwork, level: 90, icon: MdPeople, color: "#10B981" }, // Verde - representa colaboración y crecimiento
+    { name: t.skills.creativity, level: 90, icon: MdLightbulb, color: "#F59E0B" }, // Ámbar - representa ideas e innovación
+    { name: t.skills.dedication, level: 90, icon: MdFavorite, color: "#EF4444" }, // Rojo - representa pasión y compromiso
+    { name: t.skills.projectManagement, level: 75, icon: MdCheckCircle, color: "#8B5CF6" }, // Violeta - representa organización y estrategia
   ];
 
   const SkillCard = ({ skill, size = "normal" }: { skill: typeof technicalSkills[0], size?: "normal" | "large" }) => {
@@ -82,13 +86,18 @@ const Skills = () => {
 
   return (
     <section id="skills" className="py-20 bg-gradient-to-b from-[#01041b] to-black">
-      <div className="container mx-auto px-4">
+      <div
+        ref={elementRef}
+        className={`container mx-auto px-4 transition-all duration-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+        }`}
+      >
         <div className="text-center mb-16">
           <h1 className="text-9xl font-anton font-bold text-primary-foreground leading-none">
-            MIS
+            {t.skills.title1}
           </h1>
           <h1 className="text-[1.7rem] md:text-[8rem] lg:text-[1.6rem] font-jost font-bold text-primary-foreground leading-none">
-            HABILIDADES
+            {t.skills.title2}
           </h1>
         </div>
 
@@ -97,7 +106,7 @@ const Skills = () => {
             {/* Habilidades Técnicas - Izquierda */}
             <div>
               <h2 className="text-3xl font-jost font-bold text-primary-foreground text-center mb-8">
-                Técnicas
+                {t.skills.technical}
               </h2>
               <div className="space-y-4">
                 {/* Primera fila: 3 cards con iconos grandes */}
@@ -124,37 +133,37 @@ const Skills = () => {
             {/* Habilidades Profesionales - Derecha */}
             <div>
               <h2 className="text-3xl font-jost font-bold text-primary-foreground text-center mb-8">
-                Profesionales
+                {t.skills.professional}
               </h2>
               <div className="flex flex-col gap-4">
                 {/* Primera fila: 1 card - Creatividad */}
                 <div>
                   <SkillCard
-                    key="Creatividad"
-                    skill={professionalSkills.find(s => s.name === "Creatividad")!}
+                    key="creativity"
+                    skill={professionalSkills[2]}
                     size="large"
                   />
                 </div>
                 {/* Segunda fila: 2 cards - Comunicación y Dedicación */}
                 <div className="grid grid-cols-2 gap-4">
                   <SkillCard
-                    key="Comunicación"
-                    skill={professionalSkills.find(s => s.name === "Comunicación")!}
+                    key="communication"
+                    skill={professionalSkills[0]}
                   />
                   <SkillCard
-                    key="Dedicación"
-                    skill={professionalSkills.find(s => s.name === "Dedicación")!}
+                    key="dedication"
+                    skill={professionalSkills[3]}
                   />
                 </div>
                 {/* Tercera fila: 2 cards - Trabajo en Equipo y Gestión de Proyectos */}
                 <div className="grid grid-cols-2 gap-4">
                   <SkillCard
-                    key="Trabajo en Equipo"
-                    skill={professionalSkills.find(s => s.name === "Trabajo en Equipo")!}
+                    key="teamwork"
+                    skill={professionalSkills[1]}
                   />
                   <SkillCard
-                    key="Gestión de Proyectos"
-                    skill={professionalSkills.find(s => s.name === "Gestión de Proyectos")!}
+                    key="projectManagement"
+                    skill={professionalSkills[4]}
                   />
                 </div>
               </div>

@@ -1,39 +1,29 @@
 import { Briefcase } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Experience = () => {
-  const experiences = [
-    {
-      year: "2022 - 2023",
-      title: "Desarrollador Web",
-      company: "Angel's Tannery",
-      description: "Desarrollo de aplicaciones web utilizando tecnologías como HTML, CSS, JavaScript, React, Vue.js, node.js y MySQL.",
-      color: "#2b46ff",
-    },
-    {
-      year: "2024",
-      title: "Desarrollador Frontend",
-      company: "Mundo Tecnológico de Comunicaciones SAS",
-      description: "Desarrollo y mantenimiento de aplicaciones web, utilizando tecnologías como PHP, Xajax y MySQL.",
-      color: "#2b46ff",
-    },
-    {
-      year: "Actualidad",
-      title: "Diseñador Web Fullstack Freelance",
-      company: "Independiente",
-      description: "Desarrollo de soluciones web personalizadas para clientes diversos, incluyendo diseño responsive, optimización de rendimiento y experiencia de usuario.",
-      color: "#2b46ff",
-    },
-  ];
+  const { elementRef, isVisible } = useScrollAnimation();
+  const { t } = useTranslation();
+  const experiences = t.experience.jobs.map(job => ({
+    ...job,
+    color: "#2b46ff"
+  }));
 
   return (
     <section id="experience" className="py-20 bg-gradient-to-b from-black to-[#01041b]">
-      <div className="container mx-auto px-4">
+      <div
+        ref={elementRef}
+        className={`container mx-auto px-4 transition-all duration-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+        }`}
+      >
         <div className="text-center mb-16">
           <h1 className="text-3xl md:text-[2.94rem] font-jost font-bold text-primary-foreground leading-none">
-            EXPERIENCIA
+            {t.experience.title1}
           </h1>
           <h1 className="text-6xl md:text-[6rem] lg:text-[6rem] font-anton font-bold text-primary-foreground leading-none">
-            LABORAL
+            {t.experience.title2}
           </h1>
         </div>
 

@@ -30,10 +30,7 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center space-y-6">
           {/* Logo/Brand */}
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#10bdff] to-[#2b46ff] rounded-xl flex items-center justify-center shadow-lg">
-              <span className="font-anton font-bold text-white text-xl">DA</span>
-            </div>
-            <span className="font-jost font-bold text-2xl text-white">David Angel Osorio</span>
+            <span className="font-jost font-bold text-2xl text-white">David Angel</span>
           </div>
 
           {/* Social Links */}

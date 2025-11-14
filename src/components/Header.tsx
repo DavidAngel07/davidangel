@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Header = () => {
+  const { language, toggleLanguage } = useLanguage();
+  const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -15,12 +19,13 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { label: "INICIO", href: "#hero" },
-    { label: "SOBRE MÍ", href: "#about" },
-    { label: "HABILIDADES", href: "#skills" },
-    { label: "EXPERIENCIA", href: "#experience" },
-    { label: "PROYECTOS", href: "#portfolio" },
-    { label: "CONTACTO", href: "#contact" },
+    { label: t.nav.home, href: "#hero" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.skills, href: "#skills" },
+    { label: t.nav.experience, href: "#experience" },
+    { label: t.nav.projects, href: "#portfolio" },
+    { label: t.nav.pricing, href: "#pricing" },
+    { label: t.nav.contact, href: "#contact" },
   ];
 
   const scrollToSection = (href: string) => {
@@ -38,10 +43,10 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center h-20">
+        <div className="flex items-center justify-between h-20">
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center space-x-1 flex-1 justify-center">
             {navItems.map((item) => (
               <button
                 key={item.href}
@@ -55,15 +60,37 @@ const Header = () => {
             ))}
           </nav>
 
+          {/* Language Toggle Button - Desktop */}
+          <div className="hidden md:flex items-center">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLanguage}
+              className="gap-2 text-primary-foreground hover:text-[#10bdff] transition-smooth"
+            >
+              <Languages className="h-5 w-5" />
+              <span className="font-jost font-semibold">{language === 'es' ? 'EN' : 'ES'}</span>
+            </Button>
+          </div>
+
           {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
+          <div className="md:hidden flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleLanguage}
+              className="text-primary-foreground hover:text-[#10bdff]"
+            >
+              <Languages className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

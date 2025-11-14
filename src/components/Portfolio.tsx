@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ExternalLink, ChevronLeft, ChevronRight, X, Eye } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useTranslation } from "@/hooks/useTranslation";
 import {
   SiFigma,
   SiReact,
@@ -26,28 +28,30 @@ import {
 } from "react-icons/si";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import diseño1 from "@/assets/Diseño1.png";
-import diseño2 from "@/assets/Diseño2.png";
-import diseño3 from "@/assets/Diseño3.png";
-import diseño4 from "@/assets/Diseño4.png";
-import diseño5 from "@/assets/Diseño5.png";
-import diseño6 from "@/assets/Diseño6.png";
-import diseño7 from "@/assets/Diseño7.jpg";
-import diseño8 from "@/assets/Diseño8.jpg";
-import diseño9 from "@/assets/Diseño9.jpg";
-import diseño10 from "@/assets/Diseño10.jpg";
-import frontend1 from "@/assets/Frontend1.png";
-import frontend2 from "@/assets/Frontend2.png";
-import frontend3 from "@/assets/Frontend3.png";
+import diseño1 from "@/assets/optimized/Diseño1.webp";
+import diseño2 from "@/assets/optimized/Diseño2.webp";
+import diseño3 from "@/assets/optimized/Diseño3.webp";
+import diseño4 from "@/assets/optimized/Diseño4.webp";
+import diseño5 from "@/assets/optimized/Diseño5.webp";
+import diseño6 from "@/assets/optimized/Diseño6.webp";
+import diseño7 from "@/assets/optimized/Diseño7.webp";
+import diseño8 from "@/assets/optimized/Diseño8.webp";
+import diseño9 from "@/assets/optimized/Diseño9.webp";
+import diseño10 from "@/assets/optimized/Diseño10.webp";
+import frontend1 from "@/assets/optimized/Frontend1.webp";
+import frontend2 from "@/assets/optimized/Frontend2.webp";
+import frontend3 from "@/assets/optimized/Frontend3.webp";
 
 const Portfolio = () => {
-  const [activeCategory, setActiveCategory] = useState("TODOS");
+  const { elementRef, isVisible } = useScrollAnimation();
+  const { t } = useTranslation();
+  const [activeCategory, setActiveCategory] = useState(t.portfolio.all);
   const [carouselIndexes, setCarouselIndexes] = useState<{ [key: number]: number }>({});
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const categories = ["TODOS", "DISEÑOS", "PROYECTOS"];
+  const categories = [t.portfolio.all, t.portfolio.designs, t.portfolio.projects];
 
   // Función para obtener el icono correcto según el tag
   const getIconForTag = (tag: string) => {
@@ -121,120 +125,27 @@ const Portfolio = () => {
     }, 300);
   };
 
-  const projects = [
-    {
-      id: 1,
-      title: "Reloj Mundial",
-      description:
-        "App para visualizar la hora exacta actualmente de diferentes ciudades en el mundo.",
-      image: frontend1,
-      tags: ["React"],
-      category: "PROYECTOS",
-      demoUrl: "https://reloj-global.vercel.app/",
-      githubUrl: "https://github.com/DavidAngel07/globe-clock-show.git",
-    },
-    {
-      id: 2,
-      title: "StreamFlix",
-      description:
-        "Clon de Netflix para visualizar trailers de peliculas.",
-      image: frontend2,
-      tags: ["React"],
-      category: "PROYECTOS",
-      demoUrl: "",
-      githubUrl: "https://github.com/DavidAngel07/globe-clock-show.git",
-    },
-    {
-      id: 3,
-      title: "QuizMaster",
-      description:
-        "App de quiz que permite crear y jugar quizzes de opción múltiple.",
-      image: frontend3,
-      tags: ["React"],
-      category: "PROYECTOS",
-      demoUrl: "",
-      githubUrl: "https://github.com/DavidAngel07/globe-clock-show.git",
-    },
-    {
-      id: 4,
-      title: "Website Empresarial",
-      description:
-        "Diseño de una Website empresarial con múltiples propuestas.",
-      images: [diseño1, diseño2, diseño3],
-      tags: ["Figma"],
-      category: "DISEÑOS",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
-    {
-      id: 5,
-      title: "Website Agencia Digital",
-      description:
-        "Diseño de una website de una agencia digital de marketing con función de ecommerce.",
-      images: [diseño4, diseño5],
-      tags: ["Figma"],
-      category: "DISEÑOS",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
-    {
-      id: 6,
-      title: "Login de red social",
-      description:
-        "Diseño de interfaz moderna para el login de una red social para programadores.",
-      image: diseño6,
-      tags: ["Figma"],
-      category: "DISEÑOS",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
-    {
-      id: 7,
-      title: "Website Agencia de Viajes",
-      description:
-        "Diseño de una website de una agencia de viajes.",
-      image: diseño7,
-      tags: ["Figma"],
-      category: "DISEÑOS",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
-    {
-      id: 8,
-      title: "Website Cafeteria",
-      description:
-        "Diseño de una website para una cafeteria con menu incluido.",
-      image: diseño8,
-      tags: ["Figma"],
-      category: "DISEÑOS",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
-    {
-      id: 9,
-      title: "Website Gym",
-      description:
-        "Diseño de una website para un gimnasio.",
-      image: diseño9,
-      tags: ["Figma"],
-      category: "DISEÑOS",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
-    {
-      id: 10,
-      title: "Login de una plataforma SaaS",
-      description:
-        "Diseño de login de una plataforma SaaS para el control y gestion de stock.",
-      image: diseño10,
-      tags: ["Figma"],
-      category: "DISEÑOS",
-      demoUrl: "#",
-      githubUrl: "#",
-    },
+  const projectData = [
+    { image: frontend1, tags: ["React"], category: t.portfolio.projects, demoUrl: "https://reloj-global.vercel.app/", githubUrl: "https://github.com/DavidAngel07/globe-clock-show.git" },
+    { image: frontend2, tags: ["React"], category: t.portfolio.projects, demoUrl: "", githubUrl: "https://github.com/DavidAngel07/globe-clock-show.git" },
+    { image: frontend3, tags: ["React"], category: t.portfolio.projects, demoUrl: "", githubUrl: "https://github.com/DavidAngel07/globe-clock-show.git" },
+    { images: [diseño1, diseño2, diseño3], tags: ["Figma"], category: t.portfolio.designs, demoUrl: "#", githubUrl: "#" },
+    { images: [diseño4, diseño5], tags: ["Figma"], category: t.portfolio.designs, demoUrl: "#", githubUrl: "#" },
+    { image: diseño6, tags: ["Figma"], category: t.portfolio.designs, demoUrl: "#", githubUrl: "#" },
+    { image: diseño7, tags: ["Figma"], category: t.portfolio.designs, demoUrl: "#", githubUrl: "#" },
+    { image: diseño8, tags: ["Figma"], category: t.portfolio.designs, demoUrl: "#", githubUrl: "#" },
+    { image: diseño9, tags: ["Figma"], category: t.portfolio.designs, demoUrl: "#", githubUrl: "#" },
+    { image: diseño10, tags: ["Figma"], category: t.portfolio.designs, demoUrl: "#", githubUrl: "#" }
   ];
 
-  const filteredProjects = activeCategory === "TODOS"
+  const projects = t.portfolio.items.map((item, index) => ({
+    id: index + 1,
+    title: item.title,
+    description: item.description,
+    ...projectData[index]
+  }));
+
+  const filteredProjects = activeCategory === t.portfolio.all
     ? projects
     : projects.filter(project => project.category === activeCategory);
 
@@ -243,13 +154,18 @@ const Portfolio = () => {
       id="portfolio"
       className="py-20 bg-gradient-to-b from-[#01041b] to-black"
     >
-      <div className="container mx-auto px-4">
+      <div
+        ref={elementRef}
+        className={`container mx-auto px-4 transition-all duration-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+        }`}
+      >
         <div className="text-center mb-16">
           <h1 className="text-9xl font-anton font-bold text-primary-foreground leading-none">
-            MIS
+            {t.portfolio.title1}
           </h1>
           <h1 className="text-3xl md:text-[8rem] lg:text-[1.9rem] font-jost font-bold text-primary-foreground leading-none">
-            PROYECTOS
+            {t.portfolio.title2}
           </h1>
         </div>
 
@@ -300,6 +216,7 @@ const Portfolio = () => {
                         src={currentImage}
                         alt={project.title}
                         className="w-full h-full object-cover"
+                        loading="lazy"
                       />
 
                       {/* Carousel controls */}
@@ -349,7 +266,7 @@ const Portfolio = () => {
                           onClick={() => openModal(project)}
                         >
                           <Eye className="h-4 w-4" />
-                          Ver
+                          {t.portfolio.view}
                         </Button>
                       </div>
                     </div>
@@ -490,7 +407,7 @@ const Portfolio = () => {
                 </div>
 
                 {/* Demo button para proyectos */}
-                {selectedProject.category === "PROYECTOS" && (
+                {selectedProject.category === t.portfolio.projects && (
                   <Button
                     className="gap-2"
                     style={{ backgroundColor: '#10bdff', color: 'black' }}
@@ -502,7 +419,7 @@ const Portfolio = () => {
                       rel="noopener noreferrer"
                     >
                       <ExternalLink className="h-4 w-4" />
-                      Ver Demo
+                      {t.portfolio.viewDemo}
                     </a>
                   </Button>
                 )}

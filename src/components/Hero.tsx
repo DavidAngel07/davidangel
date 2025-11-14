@@ -1,8 +1,12 @@
 import { Facebook, Instagram, Linkedin, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.png";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useTranslation } from "@/hooks/useTranslation";
+import heroBg from "@/assets/optimized/hero-bg.webp";
 
 const Hero = () => {
+  const { elementRef, isVisible } = useScrollAnimation();
+  const { t } = useTranslation();
   const socialLinks = [
     {
       icon: Instagram,
@@ -32,13 +36,19 @@ const Hero = () => {
           src={heroBg}
           alt="City skyline"
           className="w-full h-full object-cover object-[75%_center] md:object-center"
+          fetchPriority="high"
         />
         {/* Gradiente mejorado para móviles */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black md:from-black/20 md:via-transparent md:to-transparent"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 pt-20 pl-8 md:pl-16 lg:pl-24">
+      <div
+        ref={elementRef}
+        className={`relative z-10 pt-20 pl-8 md:pl-16 lg:pl-24 transition-all duration-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+        }`}
+      >
         <div className="flex flex-col items-start text-left py-16 max-w-2xl space-y-4">
 
           {/* Name and Title */}
@@ -52,7 +62,7 @@ const Hero = () => {
               </h1>
             </div>
             <p className="text-2xl md:text-3xl font-poppins text-primary-foreground/90 font-medium">
-              Desarrollador Web <span className="text-[#10bdff]">Frontend</span>
+              {t.hero.role} <span className="text-[#10bdff]">{t.hero.roleSecondary}</span>
             </p>
           </div>
 
@@ -89,7 +99,7 @@ const Hero = () => {
               className="text-xl bg-background/0 border-primary-foreground/60 hover:bg-background/40 transition-smooth rounded-full text-[#10bdff] hover:text-black"
               onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
             >
-              Hablemos de tu proyecto
+              {t.hero.description}
             </Button>
           </div>
         </div>

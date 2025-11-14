@@ -4,11 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useTranslation } from "@/hooks/useTranslation";
 import emailjs from "@emailjs/browser";
-import fondo1 from "@/assets/fondo1.jpg";
+import fondo1 from "@/assets/optimized/fondo1.webp";
 
 const Contact = () => {
+  const { elementRef, isVisible } = useScrollAnimation();
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -60,24 +64,17 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: Mail,
-      title: "Email",
+      title: t.contact.email,
       value: "davidangelosorio29@gmail.com",
       href: "mailto:davidangelosorio29@gmail.com",
       color: "#10bdff",
     },
     {
       icon: MessageCircle,
-      title: "WhatsApp",
-      value: "+57 314-3814895",
-      href: "https://wa.me/573143814895",
-      color: "#25D366",
-    },
-    {
-      icon: MapPin,
-      title: "Ubicación",
-      value: "Calle 49b sur #9-89",
-      href: "#",
-      color: "#EF4444",
+      title: t.contact.instagram,
+      value: "david.angel7_",
+      href: "https://www.instagram.com/david.angel7_",
+      color: "#ff0062",
     },
   ];
 
@@ -90,16 +87,21 @@ const Contact = () => {
       {/* Overlay oscuro para mejorar legibilidad */}
       <div className="absolute inset-0 bg-black/80"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div
+        ref={elementRef}
+        className={`container mx-auto px-4 relative z-10 transition-all duration-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+        }`}
+      >
         <div className="text-center mb-16">
           <h1 className="text-6xl font-anton font-bold text-primary-foreground leading-none">
-            CONTACTO
+            {t.contact.title1}
           </h1>
           <h1 className="text-[2rem] md:text-[8rem] lg:text-[1.9rem] font-jost font-bold text-primary-foreground leading-none mb-6">
-            HABLEMOS
+            {t.contact.title2}
           </h1>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            Estoy disponible para nuevos proyectos. Contacta conmigo y hagamos realidad tu visión digital
+            {t.contact.subtitle}
           </p>
         </div>
 
@@ -152,10 +154,10 @@ const Contact = () => {
               <div className="relative bg-gradient-to-br from-[#25D366] to-[#128C7E] rounded-xl overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl cursor-pointer hover:scale-105">
                 <div className="relative z-10 p-6">
                   <h3 className="font-jost font-bold text-lg text-white mb-3">
-                    ¿Prefieres WhatsApp?
+                    {t.contact.whatsappTitle}
                   </h3>
                   <p className="text-sm text-white/90 mb-4">
-                    Contáctame directamente por WhatsApp para una respuesta más rápida
+                    {t.contact.whatsappDescription}
                   </p>
                   <Button
                     asChild
@@ -167,7 +169,7 @@ const Contact = () => {
                       rel="noopener noreferrer"
                     >
                       <MessageCircle className="h-4 w-4" />
-                      Enviar WhatsApp
+                      {t.contact.whatsappButton}
                     </a>
                   </Button>
                 </div>
@@ -182,21 +184,21 @@ const Contact = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label htmlFor="name" className="text-sm font-medium text-white">
-                      Nombre completo
+                      {t.contact.form.name}
                     </label>
                     <Input
                       id="name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="Tu nombre"
+                      placeholder={t.contact.form.namePlaceholder}
                       className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-[#10bdff] focus:ring-[#10bdff]"
                       required
                     />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="email" className="text-sm font-medium text-white">
-                      Email
+                      {t.contact.form.email}
                     </label>
                     <Input
                       id="email"
@@ -204,7 +206,7 @@ const Contact = () => {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="tu@email.com"
+                      placeholder={t.contact.form.emailPlaceholder}
                       className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-[#10bdff] focus:ring-[#10bdff]"
                       required
                     />
@@ -213,14 +215,14 @@ const Contact = () => {
 
                 <div className="space-y-2">
                   <label htmlFor="subject" className="text-sm font-medium text-white">
-                    Asunto
+                    {t.contact.form.subject}
                   </label>
                   <Input
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    placeholder="¿En qué puedo ayudarte?"
+                    placeholder={t.contact.form.subjectPlaceholder}
                     className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-[#10bdff] focus:ring-[#10bdff]"
                     required
                   />
@@ -228,14 +230,14 @@ const Contact = () => {
 
                 <div className="space-y-2">
                   <label htmlFor="message" className="text-sm font-medium text-white">
-                    Mensaje
+                    {t.contact.form.message}
                   </label>
                   <Textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Cuéntame sobre tu proyecto..."
+                    placeholder={t.contact.form.messagePlaceholder}
                     rows={6}
                     className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-[#10bdff] focus:ring-[#10bdff] resize-none"
                     required
@@ -250,7 +252,7 @@ const Contact = () => {
                   disabled={isSubmitting}
                 >
                   <Send className="h-4 w-4" />
-                  {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
+                  {isSubmitting ? t.contact.form.sending : t.contact.form.submit}
                 </Button>
               </form>
             </div>

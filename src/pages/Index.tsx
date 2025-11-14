@@ -1,15 +1,19 @@
+import { lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ScrollingTicker from "@/components/ScrollingTicker";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Experience from "@/components/Experience";
-import Portfolio from "@/components/Portfolio";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
 import { FaReact, FaNodeJs, FaJs, FaHtml5, FaCss3Alt, FaPhp, FaGitAlt, FaGithub } from "react-icons/fa";
 import { SiTailwindcss, SiMysql, SiXampp, SiFirebase, SiTypescript } from "react-icons/si";
 import { TbApi } from "react-icons/tb";
+
+// Lazy load components that are below the fold
+const About = lazy(() => import("@/components/About"));
+const Skills = lazy(() => import("@/components/Skills"));
+const Experience = lazy(() => import("@/components/Experience"));
+const Portfolio = lazy(() => import("@/components/Portfolio"));
+const Pricing = lazy(() => import("@/components/Pricing"));
+const Contact = lazy(() => import("@/components/Contact"));
+const Footer = lazy(() => import("@/components/Footer"));
 
 const Index = () => {
   // Frontend Technologies
@@ -35,13 +39,18 @@ const Index = () => {
       <main>
         <Hero />
         <ScrollingTicker technologies={Technologies} />
-        <About />
-        <Skills />
-        <Experience />
-        <Portfolio />
-        <Contact />
+        <Suspense fallback={<div className="min-h-screen bg-gradient-to-b from-black to-[#01041b]" />}>
+          <About />
+          <Skills />
+          <Experience />
+          <Portfolio />
+          <Pricing />
+          <Contact />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };
