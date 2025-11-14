@@ -5,7 +5,10 @@ import {
   Eye
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import profileImage from "@/assets/optimized/about-foto.webp";
+import profileImageSm from "@/assets/optimized/about-foto-sm.webp";
+import profileImageMd from "@/assets/optimized/about-foto-md.webp";
+import profileImageLg from "@/assets/optimized/about-foto-lg.webp";
+import profileImageXl from "@/assets/optimized/about-foto-xl.webp";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -64,10 +67,14 @@ const About = () => {
 
               {/* Main Image */}
               <img
-                src={profileImage}
+                src={profileImageMd}
+                srcSet={`${profileImageSm} 400w, ${profileImageMd} 600w, ${profileImageLg} 800w, ${profileImageXl} 1200w`}
+                sizes="(max-width: 640px) 400px, (max-width: 1024px) 600px, 800px"
                 alt="David Angel Osorio"
                 className="relative rounded-2xl w-full h-auto object-cover shadow-2xl"
                 loading="lazy"
+                width="600"
+                height="600"
               />
             </div>
           </div>

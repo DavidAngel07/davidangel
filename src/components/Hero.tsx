@@ -37,6 +37,8 @@ const Hero = () => {
           alt="City skyline"
           className="w-full h-full object-cover object-[75%_center] md:object-center"
           fetchPriority="high"
+          width="1920"
+          height="1080"
         />
         {/* Gradiente mejorado para móviles */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black md:from-black/20 md:via-transparent md:to-transparent"></div>
